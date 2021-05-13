@@ -1,0 +1,27 @@
+{
+  "name": "empolyee-m-system",
+  "version": "1.0.0",
+  "description": "Employee management system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phil-stew/Empolyee-M-System.git"
+  },
+  "keywords": [
+    "phil"
+  ],
+  "author": "Phillip Stewart",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phil-stew/Empolyee-M-System/issues"
+  },
+  "homepage": "https://github.com/phil-stew/Empolyee-M-System#readme",
+  "dependencies": {
+    "dotenv": "^9.0.2",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1"
+  }
+}
