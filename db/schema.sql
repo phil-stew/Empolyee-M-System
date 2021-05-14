@@ -20,3 +20,18 @@ CREATE TABLE e_role(
 
     d_name VARCHAR(30)
 );
+<<<<<<< HEAD
+=======
+f
+INSERT INTO team_member (first_name, last_name, role_id, manager_id)
+VALUES("Phil", "Stew", 3, 9);
+
+INSERT INTO team_member (first_name, last_name, role_id, manager_id)
+VALUES("Philn", "Stewn", 3, 9);
+
+INSERT INTO team_member (first_name, last_name, role_id, manager_id)
+VALUES("Philnp", "Stewnl", 3, 9);
+
+INSERT INTO team_member (first_name, last_name, role_id, manager_id)
+VALUES("Philnp", "Stewnl", 3, 9);
+>>>>>>> c7cde567e8428ee13f854a0ff77cea8f21e65c33
