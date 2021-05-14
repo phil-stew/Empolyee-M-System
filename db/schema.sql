@@ -30,3 +30,6 @@ VALUES("Philn", "Stewn", 3, 9);
 
 INSERT INTO team_member (first_name, last_name, role_id, manager_id)
 VALUES("Philnp", "Stewnl", 3, 9);
+
+INSERT INTO team_member (first_name, last_name, role_id, manager_id)
+VALUES("Philnp", "Stewnl", 3, 9);
