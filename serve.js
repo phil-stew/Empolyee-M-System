@@ -82,22 +82,35 @@ const runSearch = () => {
 
 const employeeSearch = () => {
 
-    connection.query('SELECT * FROM team_member', (err,res)=>{
+   const query = connection.query('SELECT * FROM team_member', (err,res)=>{
       if (err) throw err;
-      res.forEeach(({first_name, last_name, role_id, manager_id})=>{
-        console.log(`${first_name} | ${last_name} | ${role_id} | ${manager_id}`)
+      res.forEach(({id, first_name, last_name, role_id, manager_id})=>{
+        console.log(`${id} | ${first_name} | ${last_name} | ${role_id} | ${manager_id}`)
       });
       console.log('-------------------------')
+      
     });
-
+  runSearch()
 };
 
 const departmentSearch = () => {
 
+ const query = connection.query('SELECT * FROM department', (err,res)=>{
+    if (err) throw err;
+    res.forEach(({d_name})=>{
+      console.log(`${d_name}`)
+    });
+    console.log('-------------------------')
+    
+  });runSearch()
+};
+
+const roleSearch = () => {
+
   connection.query('SELECT * FROM e_role', (err,res)=>{
     if (err) throw err;
-    res.forEeach(({first_name, last_name, role_id, manager_id})=>{
-      console.log(`${first_name} | ${last_name} | ${role_id} | ${manager_id}`)
+    res.forEach(({title, salary, })=>{
+      console.log(`${title} | ${salary} `)
     });
     console.log('-------------------------')
   });

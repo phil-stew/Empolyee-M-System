@@ -5,7 +5,7 @@ USE employee_db;
 
 
 CREATE TABLE department(
-    id INT,
+    id INT NOT NULL,
     d_name VARCHAR(30),
     PRIMARY KEY (id)
 );
@@ -14,7 +14,7 @@ CREATE TABLE e_role(
     id INT,
     title VARCHAR(30),
     salary DECIMAL,
-    department_id INT
+    department_id INT,
     PRIMARY KEY (id)
 
 );
@@ -56,7 +56,7 @@ INSERT INTO e_role (id, title, salary, department_id)
 VALUES(2, 'Supervisor', 60000.00, 1);
 
 INSERT INTO e_role (id, title, salary, department_id)
-VALUES(2, 'Team Member', 60000.00, 1);
+VALUES(3, 'Team Member', 60000.00, 1);
 
 
 
@@ -71,3 +71,10 @@ VALUES("Philnp", "Stewnl", 3, 9);
 
 INSERT INTO team_member (first_name, last_name, role_id, manager_id)
 VALUES("Philnp", "Stewnl", 3, 9);
+
+SELECT department.d_name, e_role.salary, e_role.title, team_member.last_name, team_member.first_name 
+FROM department
+INNER JOIN e_role ON e_role.department_id = department.d_name
+INNER JOIN team_member ON team_member.role_id = e_role.id
+ORDER BY team_member.first_name;
+
