@@ -21,7 +21,7 @@ CREATE TABLE e_role(
 CREATE TABLE department(
     d_name VARCHAR(30)
 );
-
+f
 INSERT INTO team_member (first_name, last_name, role_id, manager_id)
 VALUES("Phil", "Stew", 3, 9);
 
