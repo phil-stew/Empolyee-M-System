@@ -33,10 +33,11 @@ const runSearch = () => {
         'View Department',
         'View Roles',
         'Add Employee',
-        'Add Role',
+        'Add A Role',
+        'Add Department',
         'Update Employee Role',
-        'Update Manager',
-        'View Roles',
+        
+        
       ],
     })
     .then((answer) => {
@@ -64,7 +65,7 @@ const runSearch = () => {
           break;
 
         case 'Add Department':
-          AddDepartment();
+          addDepartment();
           break;
         case 'Update Employee Role':
           updateRole();
@@ -149,6 +150,7 @@ function getManager() {
       });
     });
   });
+
 }
 // it's invoked at the start, doesn't need to be invoked again.
 getManager();
@@ -266,23 +268,67 @@ const addEmployee = () => {
 }
 
 
-const addRole = () => {
+const addDepartment = () => {
 
 
   inquirer
     .prompt([{
+      name: 'id',
+      type: 'input',
+      message: 'What is the ID of the new department?',
+    },
+      {
       name: 'deparment',
       type: 'input',
-      message: 'What is the name of the nerw department?',
+      message: 'What is the name of the new department?',
     },
   ])
   .then((res) => {
     console.log('Inserting a new department...\n');
     console.log(employeeArr)
     connection.query('INSERT INTO department SET ?',
+      {
+        id: res.id,
+        department: res.department
+      },
+      (err, res) => {
+        if (err) throw err;
+        console.log(`${res.affectedRows} product inserted!\n`);
+        // Call updateProduct AFTER the INSERT completes
+        employeeSearch();
+      });
+  })
+}
+
+const addRole = () => {
+
+
+  inquirer
+    .prompt([{
+      name: 'role',
+      type: 'input',
+      message: 'What role would you like to add?',
+    },
+    {
+      name: 'salary',
+      type: 'input',
+      message: 'What is the salary of this role?',
+    },
+    {
+      name: 'department',
+      type: 'rawlist',
+      message: 'What department is this role for?',
+      choices: departmentArr,
+    },
+  ])
+  .then((res) => {
+    console.log('Inserting a new role...\n');
+    connection.query('INSERT INTO role SET ?',
 
       {
-        deepartment: res.deepartment
+        title: res.role,
+        salary: res.salary,
+        department_id: res.department
       },
       (err, res) => {
         if (err) throw err;
@@ -295,11 +341,7 @@ const addRole = () => {
 
   })
 
-
-
-
 }
-
 
 
 const updateRole = () => {
@@ -318,6 +360,7 @@ const updateRole = () => {
         message: 'What position to update too..',
         choices: rolesArr
       },
+      
 
     ]).then((res) => {
       console.log(res.employee)
