@@ -5,7 +5,15 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  
   },
+  "script": {
+    "start":"node server.js"
+
+  },
+
+
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/phil-stew/Empolyee-M-System.git"
