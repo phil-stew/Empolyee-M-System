@@ -36,13 +36,13 @@ const runSearch = () => {
         'Add A Role',
         'Add Department',
         'Update Employee Role',
-        
-        
+
+
       ],
     })
     .then((answer) => {
       switch (answer.action) {
-        case 'View  Employees':
+        case 'View Employees':
           employeeSearch();
           break;
 
@@ -157,12 +157,12 @@ getManager();
 
 const employeeSearch = () => {
 
-  const query = connection.query('SELECT * FROM employee', (err, res) => {
+  connection.query('SELECT * FROM employee', (err, res) => {
     if (err) throw err;
     res.forEach(({ id, first_name, last_name, role_id, manager_id }) => {
       console.log(`${id} | ${first_name} | ${last_name} | ${role_id} | ${manager_id}`)
     });
-    console.log('-------------------------')
+    console.log('-----------------------------------------------')
     runSearch()
   });
 
@@ -170,12 +170,12 @@ const employeeSearch = () => {
 
 const departmentSearch = () => {
 
-  const query = connection.query('SELECT * FROM department', (err, res) => {
+  connection.query('SELECT * FROM department', (err, res) => {
     if (err) throw err;
     res.forEach(({ department }) => {
       console.log(`${department}`)
     });
-    console.log('-------------------------')
+    console.log('----------------------------------------------')
 
   });
   runSearch()
@@ -188,7 +188,7 @@ const roleSearch = () => {
     res.forEach(({ id, title, salary }) => {
       console.log(`${id} ${title} | ${salary} `)
     });
-    console.log('-------------------------')
+    console.log('-----------------------------------------------')
   });
   runSearch()
 };
@@ -202,7 +202,7 @@ const viewManager = () => {
     res.forEach(({ first_name, last_name }) => {
       console.log(`${first_name} | ${last_name} `)
     });
-    console.log('-------------------------')
+    console.log('-----------------------------------------------')
   });
   runSearch()
 };
@@ -257,11 +257,9 @@ const addEmployee = () => {
         (err, res) => {
           if (err) throw err;
           console.log(`${res.affectedRows} product inserted!\n`);
-          // Call updateProduct AFTER the INSERT completes
-          employeeSearch();
-        }
-      );
-
+          console.log('-----------------------------------------------')
+        });
+      employeeSearch();
 
     })
 
@@ -269,40 +267,35 @@ const addEmployee = () => {
 
 
 const addDepartment = () => {
-
-
   inquirer
     .prompt([{
       name: 'id',
       type: 'input',
       message: 'What is the ID of the new department?',
     },
-      {
+    {
       name: 'deparment',
       type: 'input',
       message: 'What is the name of the new department?',
     },
-  ])
-  .then((res) => {
-    console.log('Inserting a new department...\n');
-    console.log(employeeArr)
-    connection.query('INSERT INTO department SET ?',
-      {
-        id: res.id,
-        department: res.department
-      },
-      (err, res) => {
-        if (err) throw err;
-        console.log(`${res.affectedRows} product inserted!\n`);
-        // Call updateProduct AFTER the INSERT completes
-        employeeSearch();
-      });
-  })
+    ])
+    .then((res) => {
+      console.log('Inserting a new department...\n');
+      console.log(employeeArr)
+      connection.query('INSERT INTO department SET ?',
+        {
+          id: res.id,
+          department: res.department
+        },
+        (err, res) => {
+          if (err) throw err;
+          console.log(`${res.affectedRows} product inserted!\n`);
+          console.log('-----------------------------------------------')
+          departmentSearch();
+        });
+    })
 }
-
 const addRole = () => {
-
-
   inquirer
     .prompt([{
       name: 'role',
@@ -320,30 +313,25 @@ const addRole = () => {
       message: 'What department is this role for?',
       choices: departmentArr,
     },
-  ])
-  .then((res) => {
-    console.log('Inserting a new role...\n');
-    connection.query('INSERT INTO role SET ?',
+    ])
+    .then((res) => {
+      console.log('Inserting a new role...\n');
+      connection.query('INSERT INTO role SET ?',
 
-      {
-        title: res.role,
-        salary: res.salary,
-        department_id: res.department
-      },
-      (err, res) => {
-        if (err) throw err;
-        console.log(`${res.affectedRows} product inserted!\n`);
-        // Call updateProduct AFTER the INSERT completes
-        employeeSearch();
-      }
-    );
-
-
-  })
-
+        {
+          title: res.role,
+          salary: res.salary,
+          department_id: res.department
+        },
+        (err, res) => {
+          if (err) throw err;
+          console.log(`${res.affectedRows} product inserted!\n`);
+          // Call updateProduct AFTER the INSERT completes
+          console.log('-----------------------------------------------')
+        });
+roleSearch();
+    })
 }
-
-
 const updateRole = () => {
   console.log(employeeArr)
   inquirer
@@ -360,36 +348,20 @@ const updateRole = () => {
         message: 'What position to update too..',
         choices: rolesArr
       },
-      
-
     ]).then((res) => {
       console.log(res.employee)
       console.log(res.role)
       console.log('Inserting a new product...\n');
       connection.query('UPDATE employee SET employee.role_id = ? WHERE employee.id = ?',
-
-        [
-          res.role,
-
-
+        [res.role,
           res.employee
-
         ],
         (err, res) => {
           if (err) throw err;
           console.log(`${res.affectedRows} product inserted!\n`);
-          // Call updateProduct AFTER the INSERT completes
-          getEmployee()
-          runSearch()
-
-        }
-      );
-
-
-
+          console.log('-----------------------------------------------')
+        });
+employeeSearch()
     })
-
-  // logs the actual query being run
-
 };
 
