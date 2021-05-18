@@ -15,7 +15,6 @@ const connection = mysql.createConnection({
   database: 'employee_db',
 });
 
-
 connection.connect((err) => {
   if (err) throw err;
   console.log('hi good to goo')
@@ -36,8 +35,6 @@ const runSearch = () => {
         'Add A Role',
         'Add Department',
         'Update Employee Role',
-
-
       ],
     })
     .then((answer) => {
@@ -45,11 +42,9 @@ const runSearch = () => {
         case 'View Employees':
           employeeSearch();
           break;
-
         case 'View Department':
           departmentSearch();
           break;
-
         case 'View By Manager':
           viewManager();
           break;
@@ -59,22 +54,15 @@ const runSearch = () => {
         case 'Add Employee':
           addEmployee();
           break;
-
         case 'Add A Role':
           addRole();
           break;
-
         case 'Add Department':
           addDepartment();
           break;
         case 'Update Employee Role':
           updateRole();
           break;
-
-
-
-
-
         default:
           console.log(`Invalid action: ${answer.action}`);
           break;
@@ -97,7 +85,6 @@ function getRoles() {
     });
   });
 }
-// it's invoked at the start, doesn't need to be invoked again.
 getRoles();
 
 let employeeArr = [];
@@ -115,7 +102,6 @@ function getEmployee() {
     });
   });
 }
-// it's invoked at the start, doesn't need to be invoked again.
 getEmployee();
 
 let departmentArr = [];
@@ -132,13 +118,11 @@ function getDepartment() {
     });
   });
 }
-// it's invoked at the start, doesn't need to be invoked again.
 getDepartment();
-
 
 let managerArr = [];
 function getManager() {
-  return connection.query("SELECT first_name, last_name, role_id FROM employee WHERE role_id = 3", function (error, result) {
+  return connection.query("SELECT first_name, last_name, role_id FROM employee WHERE role_id = 1", function (error, result) {
     if (error) {
       console.log(error);
     }
@@ -150,13 +134,10 @@ function getManager() {
       });
     });
   });
-
 }
-// it's invoked at the start, doesn't need to be invoked again.
 getManager();
 
 const employeeSearch = () => {
-
   connection.query('SELECT * FROM employee', (err, res) => {
     if (err) throw err;
     res.forEach(({ id, first_name, last_name, role_id, manager_id }) => {
@@ -165,24 +146,18 @@ const employeeSearch = () => {
     console.log('-----------------------------------------------')
     runSearch()
   });
-
 };
-
 const departmentSearch = () => {
-
   connection.query('SELECT * FROM department', (err, res) => {
     if (err) throw err;
-    res.forEach(({ department }) => {
-      console.log(`${department}`)
+    res.forEach(({ id, department }) => {
+      console.log(`${id} | ${department}`)
     });
     console.log('----------------------------------------------')
-
   });
   runSearch()
 };
-
 const roleSearch = () => {
-
   connection.query('SELECT * FROM role', (err, res) => {
     if (err) throw err;
     res.forEach(({ id, title, salary }) => {
@@ -192,11 +167,7 @@ const roleSearch = () => {
   });
   runSearch()
 };
-
-
-
 const viewManager = () => {
-
   connection.query('SELECT * FROM employee WHERE role_id = 3', (err, res) => {
     if (err) throw err;
     res.forEach(({ first_name, last_name }) => {
@@ -206,10 +177,7 @@ const viewManager = () => {
   });
   runSearch()
 };
-
 const addEmployee = () => {
-
-
   inquirer
     .prompt([{
       name: 'first_name',
@@ -239,15 +207,11 @@ const addEmployee = () => {
       type: 'rawlist',
       message: "Who is this employee's manager?",
       choices: managerArr
-
-    }
-
-    ])
+    }])
     .then((res) => {
       console.log('Inserting a new product...\n');
       console.log(employeeArr)
       connection.query('INSERT INTO employee SET ?',
-
         {
           first_name: res.first_name,
           last_name: res.last_name,
@@ -260,37 +224,30 @@ const addEmployee = () => {
           console.log('-----------------------------------------------')
         });
       employeeSearch();
-
     })
-
 }
-
-
 const addDepartment = () => {
   inquirer
-    .prompt([{
-      name: 'id',
-      type: 'input',
-      message: 'What is the ID of the new department?',
-    },
+    .prompt([
     {
-      name: 'deparment',
+      name: 'nemdept',
       type: 'input',
       message: 'What is the name of the new department?',
     },
     ])
     .then((res) => {
       console.log('Inserting a new department...\n');
-      console.log(employeeArr)
+      console.log(res)
       connection.query('INSERT INTO department SET ?',
         {
-          id: res.id,
-          department: res.department
+          
+          department: res.nemdept
         },
         (err, res) => {
           if (err) throw err;
           console.log(`${res.affectedRows} product inserted!\n`);
           console.log('-----------------------------------------------')
+          console.log(res)
           departmentSearch();
         });
     })
