@@ -8,7 +8,7 @@
   
   },
   "script": {
-    "start":"node server.js"
+    "start":"node index.js"
 
   },
 

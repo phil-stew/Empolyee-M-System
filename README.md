@@ -1,6 +1,10 @@
 # Empolyee-M-System
 An employee system for managing employees 
 
+To start this application ypu can use 'npm start' or 'node index.js'
+
+most my code is located in there server.js files.
+
 In the application a user can add new roles, depmartments and new employees 
 
 also the can view all employees, roles and departmants 
@@ -23,7 +27,7 @@ Improvements need to be made so that a user can del roles, departments and emplo
 
 also when uppdating an option to create a new role would help incase the use wants to assign an new non-exsisting role an employee   
 
-![The app run showing list of employees]()
-![The app run starting the app list of Prompts]()
-![The app runing]()
-![The app runing]()
+![The app run showing list of employees](./assets/e-mpic1.png)
+![The app run starting the app list of Prompts](./assets/e-mpic2.png)
+![The app runing](./assets/e-mpic3.png)
+![The app runing](./assets/e-mpic4.png)
