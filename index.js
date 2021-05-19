@@ -1,5 +1,7 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
+const util = require('util');
+const { get } = require('http');
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -14,6 +16,9 @@ const connection = mysql.createConnection({
   password: '361010theone',
   database: 'employee_db',
 });
+
+// attaches a promise to your querys to make asynchronous calls
+connection.query = util.promisify(connection.query);
 
 connection.connect((err) => {
   if (err) throw err;
@@ -71,69 +76,51 @@ const runSearch = () => {
 };
 
 
-let rolesArr = [];
-function getRoles() {
-  return connection.query("SELECT * FROM role", function (error, result) {
-    if (error) {
-      console.log(error);
-    }
-    result.forEach((role) => {
-      rolesArr.push({
-        name: role.title,
-        value: role.id,
-      });
-    });
+async function getRoles() {
+  const result = await connection.query("SELECT * FROM role");
+  const rolesArr = await result.map((role) => {
+    return {
+      name: role.title,
+      value: role.id,
+    };
   });
+  return rolesArr;
 }
-getRoles();
 
-let employeeArr = [];
-function getEmployee() {
-  return connection.query("SELECT * FROM employee", function (error, result) {
-    if (error) {
-      console.log(error);
-    }
-    result.forEach((employee) => {
-      employeeArr.push({
-        name: employee.first_name,
-        name: employee.last_name,
-        value: employee.id
-      });
-    });
+async function getEmployees() {
+  const result = await connection.query("SELECT * FROM employee");
+  const employeeArr = await result.map((employee) => {
+    return {
+      name: employee.first_name + " " + employee.last_name,
+      value: employee.id
+    };
   });
+  return employeeArr;
 }
-getEmployee();
 
-let departmentArr = [];
-function getDepartment() {
-  return connection.query("SELECT * FROM department", function (error, result) {
-    if (error) {
-      console.log(error);
-    }
-    result.forEach((department) => {
-      departmentArr.push({
-        name: department.department,
-        value: department.id
-      });
-    });
+async function getDepartment() {
+  const result = await connection.query("SELECT * FROM department");
+  const departmentArr = await result.map((department) => {
+    return {
+      name: department.department,
+      value: department.id
+    };
   });
-}
-getDepartment();
+  return departmentArr;
 
-let managerArr = [];
-function getManager() {
-  return connection.query("SELECT first_name, last_name, role_id FROM employee WHERE role_id = 1", function (error, result) {
-    if (error) {
-      console.log(error);
-    }
-    result.forEach((employee) => {
-      managerArr.push({
+}
+
+
+async function getManager() {
+  const result =  await connection.query("SELECT first_name, last_name, role_id FROM employee WHERE role_id = 1");
+  const managerArr = await result.map((employee) => {
+    return {
         name: employee.first_name,
         name1: employee.last_name,
         value: employee.role_id
-      });
+      };
     });
-  });
+  return managerArr;
 }
 getManager();
 
@@ -177,7 +164,11 @@ const viewManager = () => {
   });
   runSearch()
 };
-const addEmployee = () => {
+const addEmployee = async () => {
+  const rolesArr = await getRoles();
+  const departmentArr = await getDepartment();
+  const managerArr = await getManager();
+  
   inquirer
     .prompt([{
       name: 'first_name',
@@ -191,10 +182,10 @@ const addEmployee = () => {
       message: 'What is the last name of the employee?',
     },
     {
-      name: 'Department',
+      name: 'department',
       type: 'rawlist',
       message: 'What department were they hired for?',
-      choices: departmentArr,
+      choices: departmentArr
     },
     {
       name: 'role',
@@ -210,7 +201,7 @@ const addEmployee = () => {
     }])
     .then((res) => {
       console.log('Inserting a new product...\n');
-      console.log(employeeArr)
+    
       connection.query('INSERT INTO employee SET ?',
         {
           first_name: res.first_name,
@@ -289,8 +280,10 @@ const addRole = () => {
 roleSearch();
     })
 }
-const updateRole = () => {
-  console.log(employeeArr)
+const updateRole = async () => {
+  const rolesArr = await getRoles();
+  const employeeArr = await getEmployees();
+  
   inquirer
     .prompt([
       {
