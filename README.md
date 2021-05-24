@@ -31,3 +31,7 @@ also when uppdating an option to create a new role would help incase the use wan
 ![The app run starting the app list of Prompts](./assets/e-mpic2.png)
 ![The app runing](./assets/e-mpic3.png)
 ![The app runing](./assets/e-mpic4.png)
+
+![runing the application video](./assets/run.mov)
+![runing the application video](./assets/adding.mov)
+![runing the application video](./assets/sql.mov)

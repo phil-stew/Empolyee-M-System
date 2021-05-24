@@ -185,7 +185,7 @@ const addEmployee = async () => {
       name: 'department',
       type: 'rawlist',
       message: 'What department were they hired for?',
-      choices: departmentArr
+      choices: departmentArr 
     },
     {
       name: 'role',
@@ -200,18 +200,18 @@ const addEmployee = async () => {
       choices: managerArr
     }])
     .then((res) => {
-      console.log('Inserting a new product...\n');
+      console.log('Adding new employee...\n');
     
       connection.query('INSERT INTO employee SET ?',
         {
           first_name: res.first_name,
           last_name: res.last_name,
-          role_id: res.role_id,
+          role_id: res.role,
           manager_id: res.manager_id,
         },
         (err, res) => {
           if (err) throw err;
-          console.log(`${res.affectedRows} product inserted!\n`);
+          console.log(`${res.affectedRows} adding....\n`);
           console.log('-----------------------------------------------')
         });
       employeeSearch();
@@ -236,14 +236,15 @@ const addDepartment = () => {
         },
         (err, res) => {
           if (err) throw err;
-          console.log(`${res.affectedRows} product inserted!\n`);
+          console.log(`${res.affectedRows} New department added!\n`);
           console.log('-----------------------------------------------')
           console.log(res)
           departmentSearch();
         });
     })
 }
-const addRole = () => {
+const addRole = async () => {
+  const departmentArr = await getDepartment();
   inquirer
     .prompt([{
       name: 'role',
@@ -273,7 +274,7 @@ const addRole = () => {
         },
         (err, res) => {
           if (err) throw err;
-          console.log(`${res.affectedRows} product inserted!\n`);
+          console.log(`${res.affectedRows} Role added!\n`);
           // Call updateProduct AFTER the INSERT completes
           console.log('-----------------------------------------------')
         });
