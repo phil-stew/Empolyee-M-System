@@ -32,13 +32,13 @@ also when uppdating an option to create a new role would help incase the use wan
 ![The app runing](./assets/e-mpic3.png)
 ![The app runing](./assets/e-mpic4.png)
 
-runing the application video showing how to view employes (https://youtu.be/ZdE5qUI3ypM)
-
-s
-runing the application video showing how to add roles...etc (https://youtu.be/VLL2EmuhrXc)
+[runing the application video showing how to view employes] (https://youtu.be/ZdE5qUI3ypM)
 
 
-runing the application video how to seed the info (https://youtu.be/Rp8Y3zfGJbc)
+[runing the application video showing how to add roles...etc] (https://youtu.be/VLL2EmuhrXc)
+
+
+[runing the application video how to seed the info] (https://youtu.be/Rp8Y3zfGJbc)
 
 [youtube](https://youtu.be/ZdE5qUI3ypM)
 [youtube](https://youtu.be/VLL2EmuhrXc)
